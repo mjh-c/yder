@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public
 # License along with this library.	If not, see <http://www.gnu.org/licenses/>.
 #
-DESTDIR=/usr/local
+DESTDIR=$(CAPS_HOME)
 YDER_INCLUDE=../include
 CONFIG_TEMPLATE=$(YDER_INCLUDE)/yder-cfg.h.in
 CONFIG_FILE=$(YDER_INCLUDE)/yder-cfg.h
@@ -64,7 +64,7 @@ install: all
 	install $(OUTPUT).$(VERSION) $(DESTDIR)/lib
 	install -m644 $(YDER_INCLUDE)/yder.h $(DESTDIR)/include
 	install -m644 $(CONFIG_FILE) $(DESTDIR)/include
-	-ldconfig
+	/sbin/ldconfig -r $CAPS_HOME -N -v
 
 static-install: static
 	install libyder.a $(DESTDIR)/lib
