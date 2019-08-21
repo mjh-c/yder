@@ -23,7 +23,7 @@ PROJECT_DESCRIPTION=Logging library for C applications
 PROJECT_BUGREPORT_PATH=https://github.com/babelouest/yder/issues
 PKGCONF_REQ=
 PKGCONF_REQ_PRIVATE=
-DESTDIR=/usr/local
+DESTDIR=$(CAPS_HOME)
 YDER_INCLUDE=../include
 CONFIG_TEMPLATE=$(YDER_INCLUDE)/yder-cfg.h.in
 CONFIG_FILE=$(YDER_INCLUDE)/yder-cfg.h
@@ -31,7 +31,7 @@ PKGCONFIG_FILE=../libyder.pc
 PKGCONFIG_TEMPLATE=../libyder.pc.in
 CC=gcc
 CFLAGS+=-c -fPIC -Wall -D_REENTRANT -I$(YDER_INCLUDE) $(ADDITIONALFLAGS) $(CPPFLAGS)
-LIBS=-lc -lorcania $(ADDITIONALLIBS)
+LIBS=-lc -lorcania -L$(DESTDIR)/lib $(ADDITIONALLIBS)
 OUTPUT=libyder.so
 VERSION=1.4.7
 
@@ -92,7 +92,7 @@ install: all $(PKGCONFIG_FILE)
 	install -m644 $(PKGCONFIG_FILE) $(DESTDIR)/lib/pkgconfig
 	install -m644 $(YDER_INCLUDE)/yder.h $(DESTDIR)/include
 	install -m644 $(CONFIG_FILE) $(DESTDIR)/include
-	-ldconfig
+	/sbin/ldconfig -r $(CAPS_HOME) -N -v
 
 static-install: static
 	install libyder.a $(DESTDIR)/lib
